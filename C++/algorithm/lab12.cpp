@@ -17,7 +17,7 @@ int main()
     int arr[N];
     int count = 0;
 
-    randArraySortReverse(arr, N);
+    randArrayUnsort(arr, N);
     
     clock_t start1 = clock();
     count = hoaraSort(arr, 0, N - 1);
@@ -26,7 +26,7 @@ int main()
     cout << endl << "Hoara sort time: " << seconds1 << endl;
     cout << "Count: " << count << endl; 
 
-    randArraySortReverse(arr, N);
+    randArrayUnsort(arr, N);
 
     start1 = clock();
     count = treeSort(arr, N);
@@ -35,7 +35,7 @@ int main()
     cout << endl << "Tree sort time: " << seconds1 << endl;
     cout << "Count: " << count << endl; 
 
-    randArraySortReverse(arr, N);
+    randArrayUnsort(arr, N);
 
     start1 = clock();
     count = pairMergeSort(arr, N);
