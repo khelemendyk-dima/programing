@@ -1,46 +1,47 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 /**
  * односвязный список
  */
-template<typename T>
-class List {
-public:
-	List();
-	~List();
-
-	int getSize() {return size;}
-
-	void push_back(T data);
-	void push_front(T data);
-	void insert(T data, int index);
-	void pop_back();
-	void pop_front();
-	void removeAt(int index);
-	void clear();
-	
-	T& operator[](const int index);
-private:
-	template<typename R>
-	class Node
-	{
-	public:
+template <typename T> class List {
+    private:
+	template <typename R> class Node {
+	    public:
 		Node *pNext;
 		R data;
 
 		Node(R data = R(), Node *pNext = nullptr)
 		{
 			this->data = data;
-			this->pNext = pNext; 
+			this->pNext = pNext;
 		}
 	};
-	int size;
+	size_t size;
 	Node<T> *head;
+
+    public:
+	List();
+	~List();
+
+	size_t getSize() const
+	{
+		return size;
+	}
+
+	void push_back(const T data);
+	void push_front(const T data);
+	void insert(const T data, size_t index);
+	void pop_back();
+	void pop_front();
+	void removeAt(size_t index);
+	void clear();
+
+	T &operator[](const size_t index);
 };
 
-int main () {
+int main()
+{
 	List<int> lst;
 	lst.push_back(5);
 	lst.push_back(10);
@@ -49,28 +50,26 @@ int main () {
 	cout << lst.getSize() << endl << endl;
 	lst.push_front(1);
 	lst.push_front(2);
-	lst.insert(11, 3);
+	lst.insert(11, 2);
 	lst.pop_back();
-	lst.removeAt(3);
-	for (int i = 0; i < lst.getSize(); i++) {
+	lst.removeAt(2);
+	for (size_t i = 0; i < lst.getSize(); i++) {
 		cout << lst[i] << endl;
 	}
-	cout << endl << lst.getSize() << endl;
+	cout << endl;
+	cout << lst.getSize() << endl;
 	return 0;
 }
-template<typename T>
-List<T>::List()
+template <typename T> List<T>::List()
 {
 	size = 0;
 	head = nullptr;
 }
-template<typename T>
-List<T>::~List()
+template <typename T> List<T>::~List()
 {
 	clear();
 }
-template<typename T>
-void List<T>::push_back(T data)
+template <typename T> void List<T>::push_back(const T data)
 {
 	if (head == nullptr) {
 		head = new Node<T>(data);
@@ -83,48 +82,21 @@ void List<T>::push_back(T data)
 	}
 	size++;
 }
-template<typename T>
-T& List<T>::operator[](const int index)
-{
-	Node<T> *current = this->head;
-	int i = 0;
-	while (current != nullptr) {
-		if (i == index) {
-			return current->data;
-		}
-		current = current->pNext;
-		i++;
-	}
-}
-template<typename T>
-void List<T>::pop_front()
-{
-	Node<T> *temp = head;
-	head = head->pNext;
-	delete temp;
-	size--;
-}
-template<typename T>
-void List<T>::clear()
-{
-	while(size) {
-		pop_front();
-	}
-}
-template<typename T>
-void List<T>::push_front(T data)
+template <typename T> void List<T>::push_front(const T data)
 {
 	head = new Node<T>(data, head);
 	size++;
 }
-template<typename T>
-void List<T>::insert(T data, int index)
+template <typename T> void List<T>::insert(const T data, size_t index)
 {
+	if (index > size) {
+		index = size;
+	}
 	if (index == 0) {
 		push_front(data);
 	} else {
 		Node<T> *previous = this->head;
-		for (int i = 0; i < index - 1; i++) {
+		for (size_t i = 0; i < index - 1; i++) {
 			previous = previous->pNext;
 		}
 		previous->pNext = new Node<T>(data, previous->pNext);
@@ -134,14 +106,27 @@ void List<T>::insert(T data, int index)
 		size++;
 	}
 }
-template<typename T>
-void List<T>::removeAt(int index)
+template <typename T> void List<T>::pop_back()
 {
+	removeAt(size - 1);
+}
+template <typename T> void List<T>::pop_front()
+{
+	Node<T> *temp = head;
+	head = head->pNext;
+	delete temp;
+	size--;
+}
+template <typename T> void List<T>::removeAt(size_t index)
+{
+	if (index >= size) {
+		index = size - 1;
+	}
 	if (index == 0) {
 		pop_front();
 	} else {
 		Node<T> *previous = this->head;
-		for (int i = 0; i < index - 1; i++) {
+		for (size_t i = 0; i < index - 1; i++) {
 			previous = previous->pNext;
 		}
 		Node<T> *toDelete = previous->pNext;
@@ -150,8 +135,22 @@ void List<T>::removeAt(int index)
 		size--;
 	}
 }
-template<typename T>
-void List<T>::pop_back()
+template <typename T> void List<T>::clear()
 {
-	removeAt(size - 1);
+	while (size) {
+		pop_front();
+	}
+}
+template <typename T> T &List<T>::operator[](const size_t index)
+{
+	Node<T> *current = this->head;
+	size_t i = 0;
+	while (current != nullptr) {
+		if (i == index) {
+			break;
+		}
+		current = current->pNext;
+		i++;
+	}
+	return current->data;
 }
