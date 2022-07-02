@@ -55,9 +55,5 @@ int main()
 	Human h;
 	h.RideOn(sportB);
 
-
-
-
-
 	return 0;
 }
