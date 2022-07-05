@@ -21,6 +21,7 @@ public:
 	void printMsg()
 	{
 		cout << msgOne << endl;
+		cout << msgThree << endl;
 	}
 
 };

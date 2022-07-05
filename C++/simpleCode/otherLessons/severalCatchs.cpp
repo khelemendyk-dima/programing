@@ -9,9 +9,9 @@ void Foo(int value)
 		throw "Number is below 0";
 	}
 	if (value == 0) {
-		// throw runtime_error("Number is below 0..."); 
+		// throw runtime_error("Number is equal 0..."); 
 		// или
-		throw logic_error("Number is below 0...");
+		throw logic_error("Number is equal 0...");
 	}
 	if (value == 1) {
 		throw 1;

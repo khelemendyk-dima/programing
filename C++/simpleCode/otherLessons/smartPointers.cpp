@@ -46,10 +46,6 @@ int main()
 	// unique_ptr<int> p2;
 	// p2 = move(p1);
 
-	// unique_ptr<int> p1(new int(5));
-	// unique_ptr<int> p2;
-	// p2 = move(p1);
-	
 	// int *p = p1.get();
 	// cout << *p << endl;
 
