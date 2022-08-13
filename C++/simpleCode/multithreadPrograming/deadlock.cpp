@@ -36,6 +36,7 @@ void printRectangle()
 
 	mtx2.lock();
 }
+
 void printRectangle2()
 {
 	mtx1.lock();
